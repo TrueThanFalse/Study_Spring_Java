@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <!-- log를 간략화하여 간단히 보기 위해서 pattern 수정 -->
+      <pattern>%d %5p [%c] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- logger를 설정하면 직접 log를 작성하지 않아도 Console창에 자동으로 log가 출력됨 -->
+  <!-- 참고 : logback뿐만 아니라 log4j에서도 logger를 설정할 수 있음 -->
+  <logger name="com.myweb.www" level="info" appender-ref="STDOUT"></logger>
+  <logger name="org.springframework" level="info" appender-ref="STDOUT"></logger>
+  <logger name="org.springframework.jdbc" level="info" appender-ref="STDOUT"></logger>
+  <logger name="jdbc.sqlonly" level="info" appender-ref="STDOUT"></logger>
+  <logger name="jdbc.resultsettable" level="info" appender-ref="STDOUT"></logger>
+	
+  <root level="info"> <!-- debug 레벨은 너무 많은 정보가 출력되므로 info 레벨로 수정(간략화) -->
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>

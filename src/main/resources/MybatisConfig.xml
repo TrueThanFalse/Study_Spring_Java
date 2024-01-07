@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://mybatis.org/mybatis-3/ko/getting-started.html 참고 -->
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"></setting>
+		<!--
+			일반적으로 DB는 _(언더바)로 단어 구분을 함
+			하지만 java는 카멜 표기법을 사용함
+			따라서 <setting name="mapUnderscoreToCamelCase" value="true"></setting>
+			설정을 셋팅하면 java에서 인식할 때 자동으로 변환하여 인식한다.
+			e.g.)
+			read_count(SQL) => readCount(Java) <자동 변환>
+		-->
+	</settings>
+	<typeAliases> <!-- alias는 꼭 사용해야 하는 것은 아니다. -->
+		<!-- <typeAlias type="" alias=""/> -->
+		<typeAlias type="com.hms.www.domain.BoardVO" alias="bvo"/>
+	</typeAliases>
+</configuration>

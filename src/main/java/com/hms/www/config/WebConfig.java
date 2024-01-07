@@ -10,9 +10,11 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 // WebConfig에 빨간줄 나오면 add method 실행하여 Override 상속 받기
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer{
 
-	// add method하여 상속 받으면 3개의 method가 생성되는데
-	// 이 3가지는 원래 web.xml에서 설정해주던 내용들임
-	// => Spring (xml)에서 설정된 내용을 참조해보면 xml에서 설정했던 내용을 Java로 변경하여 셋팅하는 것임
+	// add method 클릭하면 3개의 method가 생성되는데
+	// 이 3가지는 원래 web.xml에서 설정해주던 내용들과 동일한 것을 알 수 있음
+	// => Spring(xml)에서 설정된 내용을 참조해보면 xml에서 설정했던 내용을 Java로 변경하여 셋팅하는 것임
+	
+	// https://eunoia3jy.tistory.com/38 참고하면 WebConfig를 2가지 방법으로 구성할 수 있음을 참고할 것
 	
 	@Override
 	protected Class<?>[] getRootConfigClasses() {

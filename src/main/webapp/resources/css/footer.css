@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.footerDiv{
+	position: fixed;
+	bottom: 0;
+	box-sizing: border-box;
+	width: 100%;
+	background-color: greenyellow;
+}

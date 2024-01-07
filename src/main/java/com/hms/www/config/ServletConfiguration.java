@@ -40,7 +40,7 @@ public class ServletConfiguration implements WebMvcConfigurer{
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		// View 경로 설정
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-		viewResolver.setPrefix("WEB-INF/views/");
+		viewResolver.setPrefix("/WEB-INF/views/");
 		viewResolver.setSuffix(".jsp");
 		viewResolver.setViewClass(JstlView.class); // Jstl을 볼 수 있는 클래스
 		// registry에 저장

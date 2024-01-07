@@ -1,0 +1,26 @@
+<<< 2024-01-05 >>>
+------------------------------------------------------------
+User 생성 / DB 생성 ( 반드시 root 계정으로 User 생성, DB생성 )
+
+-- DB 생성 구문
+CREATE DATABASE mywebdb;
+-- User 생성 구문
+CREATE USER 'mywebUser'@'localhost' IDENTIFIED BY 'mysql';
+-- User 권한 부여 구문
+GRANT ALL PRIVILEGES ON mywebdb.* TO 'mywebUser'@'localhost' WITH GRANT OPTION;
+-- 권한 설정 완료 구문
+FLUSH PRIVILEGES;
+------------------------------------------------------------
+<<< 2024-01-07 >>>
+CREATE TABLE board(
+bno BIGINT NOT NULL AUTO_INCREMENT,
+title VARCHAR(200) NOT NULL,
+writer VARCHAR(100) NOT NULL,
+content TEXT NOT NULL,
+reg_at DATETIME DEFAULT NOW(),
+mod_at DATETIME DEFAULT NOW(),
+read_count INT DEFAULT 0,
+cmt_qty INT DEFAULT 0,
+has_file INT DEFAULT 0,
+PRIMARY KEY(bno));
+------------------------------------------------------------

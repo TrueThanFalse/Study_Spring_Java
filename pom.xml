@@ -32,7 +32,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		<!-- test와 jdbc에 대한 framework 추가 -->
+		<!-- test와 jdbc에 대한 springframework 추가 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>

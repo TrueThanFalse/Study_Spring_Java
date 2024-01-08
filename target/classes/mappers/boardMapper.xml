@@ -10,6 +10,8 @@
 		VALUES(#{title}, #{writer}, #{content})
 	</insert>
 	
+	<!-- MybatisConfig.xml에서 alias 설정하여 resultType에서 "bvo"를 사용할 수 있다. -->
+	<!-- alias 설정을 안하면 "com.hms.www.domain.BoardVO"를 작성해야 한다. -->
 	<select id="selectList" resultType="bvo">
 		SELECT * FROM board ORDER BY bno DESC
 	</select>
@@ -18,5 +20,25 @@
 		SELECT * FROM board
 		WHERE bno = #{bno}
 	</select>
+	
+	<update id="updateReadCountUp">
+		UPDATE board SET read_count = read_count + 1
+		WHERE bno = #{bno}
+	</update>
+	
+	<select id="selectModify" resultType="bvo">
+		SELECT * FROM board
+		WHERE bno = #{bno}
+	</select>
+	
+	<delete id="deleteBvo">
+		DELETE FROM board
+		WHERE bno = #{bno}
+	</delete>
+	
+	<update id="updateEdit">
+		UPDATE board SET title = #{title}, content = #{content}, mod_at = NOW()
+		WHERE bno = #{bno}
+	</update>
 	
 </mapper>

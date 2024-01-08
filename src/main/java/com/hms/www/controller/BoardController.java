@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hms.www.domain.BoardVO;
 import com.hms.www.service.BoardService;
@@ -60,8 +62,15 @@ public class BoardController {
 	
 	@GetMapping("/delete")
 	public String bvoDelete(@RequestParam("bno")int bno, RedirectAttributes re) {
-		int isOK = bsv.bnoDelete(bno);
+		int isOK = bsv.bvoDelete(bno);
 		re.addFlashAttribute("deleteMsg", isOK);
+		return "redirect:/board/list";
+	}
+	
+	@PostMapping("/edit")
+	public String edit(BoardVO bvo, RedirectAttributes re) {
+		int isOK = bsv.edit(bvo);
+		re.addFlashAttribute("editMsg", isOK);
 		return "redirect:/board/list";
 	}
 	

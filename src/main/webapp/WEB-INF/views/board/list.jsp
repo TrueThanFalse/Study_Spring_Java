@@ -45,6 +45,17 @@
 <a href="/board/list"><button type="button" class="btn btn-primary position-relative">All list</button></a>
 </div> <!-- class="container-md" 끝 -->
 	
+	<script type="text/javascript">
+		const deleteMsg = `<c:out value="${deleteMsg}"/>`;
+		if(deleteMsg > 0){
+			alert("게시글 삭제 성공");
+		};
+		const editMsg = `<c:out value="${editMsg}"/>`;
+		if(editMsg > 0){
+			alert("게시글 수정 성공");
+		};
+	</script>
+	
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 
 </body>

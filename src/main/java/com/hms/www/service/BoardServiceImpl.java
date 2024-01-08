@@ -30,5 +30,22 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public BoardVO getDetail(int bno) {
 		return bdao.selectDetail(bno);
+	}
+
+	@Override
+	public BoardVO getModify(int bno) {
+		bdao.updateReadCountUp(bno);
+		return bdao.selectModify(bno);
+	}
+
+	@Override
+	public int bvoDelete(int bno) {
+		return bdao.deleteBvo(bno);
+	}
+
+	@Override
+	public int edit(BoardVO bvo) {
+		return bdao.updateEdit(bvo);
 	} 
+	
 }

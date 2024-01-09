@@ -13,7 +13,10 @@
 	<!-- MybatisConfig.xml에서 alias 설정하여 resultType에서 "bvo"를 사용할 수 있다. -->
 	<!-- alias 설정을 안하면 "com.hms.www.domain.BoardVO"를 작성해야 한다. -->
 	<select id="selectList" resultType="bvo">
-		SELECT * FROM board ORDER BY bno DESC
+		SELECT * FROM board
+		<include refid="search"></include> <!-- 동적 SQL -->
+		ORDER BY bno DESC
+		LIMIT #{pageStart}, #{qty} <!-- PagingVO의 getter인 getPageStart Method 호출 -->
 	</select>
 	
 	<select id="selectDetail" resultType="bvo">
@@ -40,5 +43,33 @@
 		UPDATE board SET title = #{title}, content = #{content}, mod_at = NOW()
 		WHERE bno = #{bno}
 	</update>
+	
+	<select id="selectTotalCount" resultType="int">
+		SELECT COUNT(bno) FROM board
+		<include refid="search"></include> <!-- 동적 SQL -->
+	</select>
+	
+	<!-- 검색에 필요한 동적 SQL (조건문) -->
+	<sql id="search">
+	  <if test="type != null">
+	    <trim prefix="WHERE" prefixOverrides="or">
+	      <foreach collection="typeToArray" item="type"> <!-- getTypeToArray 호출 -->
+	        <trim prefix="or">
+	          <choose>
+	            <when test="type == 't'.toString()">
+	              title LIKE CONCAT('%', #{keyword}, '%')
+	            </when>
+	            <when test="type == 'w'.toString()">
+	              writer LIKE CONCAT('%', #{keyword}, '%')
+	            </when>
+	            <when test="type == 'c'.toString()">
+	              content LIKE CONCAT('%', #{keyword}, '%')
+	            </when>
+	          </choose>
+	        </trim>
+	      </foreach>
+	    </trim>
+	  </if>
+	</sql>
 	
 </mapper>

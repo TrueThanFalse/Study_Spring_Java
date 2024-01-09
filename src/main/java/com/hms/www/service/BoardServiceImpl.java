@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hms.www.domain.BoardVO;
+import com.hms.www.domain.PagingVO;
 import com.hms.www.repository.BoardDAO;
 
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardVO> getList() {
-		return bdao.selectList();
+	public List<BoardVO> getList(PagingVO pgvo) {
+		return bdao.selectList(pgvo);
 	}
 
 	@Override
@@ -46,6 +47,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int edit(BoardVO bvo) {
 		return bdao.updateEdit(bvo);
+	}
+
+	@Override
+	public int getTotalCount(PagingVO pgvo) {
+		return bdao.selectTotalCount(pgvo);
 	} 
 	
 }

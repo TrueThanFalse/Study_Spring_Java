@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hms.www.domain.BoardVO;
+import com.hms.www.domain.PagingVO;
+import com.hms.www.handler.PagingHandler;
 import com.hms.www.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -43,9 +45,19 @@ public class BoardController {
 	}
 	
 	@GetMapping("/list")
-	public void list(Model m) {
-		List<BoardVO> list = bsv.getList();
+	public void list(Model m, PagingVO pgvo) {
+		// 페이징네이션 구현
+		log.info("pgvo >>> "+pgvo);
+
+		List<BoardVO> list = bsv.getList(pgvo);
+		// 페이징네이션을 위해 pgvo 매개변수 추가하여 List<BoardVO> 조회
+	    int totalCount = bsv.getTotalCount(pgvo);
+	    // 검색시 type 값을 get하기 위한 pgvo 매개변수 추가
+	    
+	    PagingHandler ph = new PagingHandler(pgvo, totalCount);
+		
 		m.addAttribute("list", list);
+		m.addAttribute("ph", ph);
 	}
 	
 	@GetMapping("/detail")

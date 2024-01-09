@@ -3,12 +3,13 @@ package com.hms.www.repository;
 import java.util.List;
 
 import com.hms.www.domain.BoardVO;
+import com.hms.www.domain.PagingVO;
 
 public interface BoardDAO {
 
 	void insert(BoardVO bvo);
 
-	List<BoardVO> selectList();
+	List<BoardVO> selectList(PagingVO pgvo);
 
 	BoardVO selectDetail(int bno);
 
@@ -19,5 +20,7 @@ public interface BoardDAO {
 	int deleteBvo(int bno);
 
 	int updateEdit(BoardVO bvo);
+
+	int selectTotalCount(PagingVO pgvo);
 
 }

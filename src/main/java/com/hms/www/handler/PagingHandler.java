@@ -1,5 +1,8 @@
 package com.hms.www.handler;
 
+import java.util.List;
+
+import com.hms.www.domain.CommentVO;
 import com.hms.www.domain.PagingVO;
 
 import lombok.Getter;
@@ -17,6 +20,14 @@ public class PagingHandler {
 	
 	private int totalCount; // 총 게시글 수 => 매개변수로 setting
 	private PagingVO pgvo; // 매개변수로 setting
+	
+	private List<CommentVO> cmtList; // 댓글 더보기 버튼을 위한 멤버변수 추가
+	/*
+	 * 댓글의 총 개수가 15개면 5개씩 총 3페이지 나와야 됨
+	 * 5개 -> 더보기 버튼 생성 => page=1
+	 * 10개 -> 더보기 버튼 생성 => page=2
+	 * 15개 -> 더보기 버튼 없어짐 => page=3
+	 */
 	
 	// 생성자에서 모든 Logic이 구현되어 모든 값이 설정되어야 함
 	public PagingHandler(PagingVO pgvo, int totalCount) {
@@ -43,6 +54,12 @@ public class PagingHandler {
 		
 		this.prev = this.startPage > 1;
 		this.next = this.endPage < realEndPage;
+	}
+	
+	// 더보기 버튼을 위한 생성자 (cmtList를 셋팅할 수 있도록 생성자 만들기)
+	public PagingHandler(PagingVO pgvo, int totalCount, List<CommentVO> cmtList) {
+		this(pgvo, totalCount);
+		this.cmtList = cmtList;
 	}
 	
 }

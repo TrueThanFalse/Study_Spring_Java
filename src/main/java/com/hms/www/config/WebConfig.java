@@ -1,6 +1,7 @@
 package com.hms.www.config;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -69,8 +70,17 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 			클릭 할 수 있도록 만들 수 있음
 		*/
 		
-		// 추후 multipartConfig 설정을 추가할 예정
+		// 추후 multipartConfig 설정을 추가할 예정(=> File upload 진행하면서 작성 완료)
+		// 파일 업로드 관련 세부 설정 추가
+		String uploadLocation = "D:\\HMS\\myProject\\java\\fileUpload";
+		int maxFileSize = 1024*1024*20; // 20MB
+		int maxRequestSize = 1024*1024*40; // 40MB (일반적으로 maxFileSize의 2배)
+		int fileSizeThreshold = maxFileSize; // maxFileSize와 동일한 값으로 설정해야 됨
 		
-		super.customizeRegistration(registration);
+		// multipartConfig 설정
+		MultipartConfigElement multipartConfig =
+				new MultipartConfigElement(uploadLocation, maxFileSize, maxRequestSize, fileSizeThreshold);
+		
+		registration.setMultipartConfig(multipartConfig);
 	}
 }

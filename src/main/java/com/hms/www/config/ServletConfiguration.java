@@ -61,9 +61,13 @@ public class ServletConfiguration implements WebMvcConfigurer{
 	@Bean
 	/*
 	* @Bean 어노테이션으로 빈 등록을 하면 기본적으로 Bean명이 Method명으로 등록이 됨
-	* 하지만 MultipartResolver는 반드시 Bean명이 반드시 multipartResolver 로 등록되어야만 함
-	* 하지만 MultipartResolver는 interface이고 interface는 getMultipartResolver처럼
-	* get이 Method명에 포함되므로 직접 @Bean에 등록될 Bean명이 multipartResolver라고 인식시켜줘야 한다.
+	* 하지만 MultipartResolver는 Bean명이 반드시 multipartResolver 로 등록되어야만 함
+	* 따라서 MultipartResolver의 Method명은 반드시 multipartResolver로 작성되어야 함
+	* 주의사항 : m이 대문자가 아니라 소문자 m
+	* 
+	* 만약 Method명을 multipartResolver가 아닌 다른 것으로 하고싶다면
+	* @Bean 어노테이션에 직접 등록될 Bean명이 multipartResolver라고 인식시켜줘야 한다.
+	* e.g.) @Bean(name = "multipartResolver")
 	* 
 	*/
 	public MultipartResolver multipartResolver() {

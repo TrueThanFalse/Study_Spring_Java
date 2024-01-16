@@ -35,3 +35,19 @@ content TEXT NOT NULL,
 reg_at DATETIME DEFAULT NOW(),
 mod_at DATETIME DEFAULT NOW(),
 PRIMARY KEY(cno));
+
+------------------------------------------------------------
+
+<<< 2024-01-16 >>>
+FILE TABLE 생성
+CREATE TABLE file(
+uuid VARCHAR(256) NOT NULL,
+save_dir VARCHAR(256) NOT NULL,
+file_name VARCHAR(256) NOT NULL,
+file_type TINYINT(1) DEFAULT 0,
+bno BIGINT,
+file_size BIGINT,
+reg_at DATETIME DEFAULT NOW(),
+PRIMARY KEY(uuid));
+
+주의사항 : file_size의 return은 long 타입이므로 반드시 BIGINT 타입으로 생성해야 함

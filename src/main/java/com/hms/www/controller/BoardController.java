@@ -48,7 +48,7 @@ public class BoardController {
 	public void list(Model m, PagingVO pgvo) {
 		// 페이징네이션 구현
 		log.info("pgvo >>> "+pgvo);
-
+		
 		List<BoardVO> list = bsv.getList(pgvo);
 		// 페이징네이션을 위해 pgvo 매개변수 추가하여 List<BoardVO> 조회
 	    int totalCount = bsv.getTotalCount(pgvo);

@@ -117,6 +117,10 @@
 		if(editMsg > 0){
 			alert("게시글 수정 성공");
 		};
+		const registerMsg = `<c:out value="${registerMsg}"/>`;
+		if(registerMsg > 0){
+			alert("게시글 등록 성공");
+		};
 	</script>
 	
 	<jsp:include page="../layout/footer.jsp"></jsp:include>

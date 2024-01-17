@@ -1,5 +1,6 @@
 package com.hms.www.controller;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -8,10 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.hms.www.domain.BoardDTO;
 import com.hms.www.domain.BoardVO;
+import com.hms.www.domain.FileVO;
 import com.hms.www.domain.PagingVO;
+import com.hms.www.handler.FileHandler;
 import com.hms.www.handler.PagingHandler;
 import com.hms.www.service.BoardService;
 
@@ -34,15 +39,43 @@ public class BoardController {
 	*/
 	private final BoardService bsv;
 	
+	private final FileHandler fh;
+	
 	@GetMapping("/register")
 	public void register() {}
 	
+	/*
 	@PostMapping("/register")
 	public String insert(BoardVO bvo) {
 		// logback & log4jdbc 셋팅으로 직접 log를 찍지 않아도 웬만한 log는 전부 볼 수 있다.
 		bsv.insert(bvo);
 		return "home";
 	}
+	*/
+	// form 태그의 multipart/form-data 가져오기
+	@PostMapping("/register")
+	public String insert(BoardVO bvo, @RequestParam(name="files", required = false)MultipartFile[] files
+			, RedirectAttributes re) {
+		List<FileVO> flist = null;
+		
+		// FileHandler 사용하여 flist 완성
+		if(files[0].getSize() > 0) {
+			// file upload는 클라이언트 upload 할수도 있고 안 할수도 있음
+			// 따라서 만약 upload를 한다면 files의 0번지 요소의 size가 0보다 클 것임
+			// 그때만 FileHandler를 활용하여 flist를 만들어준다.
+			flist = fh.uploadFiles(files);
+		}
+		
+		BoardDTO bdto = new BoardDTO(bvo, flist);
+		
+		int isOK = bsv.insert(bdto);
+		if(isOK > 0) {
+			re.addFlashAttribute("registerMsg", isOK);
+		}
+		
+		return "redirect:/board/list";
+	}
+	
 	
 	@GetMapping("/list")
 	public void list(Model m, PagingVO pgvo) {

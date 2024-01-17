@@ -7,7 +7,7 @@ import com.hms.www.domain.PagingVO;
 
 public interface BoardDAO {
 
-	void insert(BoardVO bvo);
+	int insert(BoardVO boardVO);
 
 	List<BoardVO> selectList(PagingVO pgvo);
 
@@ -22,5 +22,7 @@ public interface BoardDAO {
 	int updateEdit(BoardVO bvo);
 
 	int selectTotalCount(PagingVO pgvo);
+
+	long selectOneBno();
 
 }

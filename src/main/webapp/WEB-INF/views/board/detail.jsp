@@ -14,6 +14,12 @@
 
 <div class="container-md">
 
+<c:set value="${bdto.bvo }" var="bvo"/>
+<!-- flist 정보를 담아서 화면에 표시하기 위해서 BoardVO 대신 BoardDTO가 jsp에 전송되도록 수정되었다. -->
+<!-- 따라서 jsp의 태그들의 value 값들을 bdto로 수정하여야 하는데 직접 수정하는 것 보다 -->
+<!-- c:set 기능을 활용하여 수 많은 태그들을 직접 수정하지 않고 효율적으로 세팅할 수 있다. -->
+<!-- 주의사항 : c:set은 JS에는 적용되지 않으므로 JS는 직접 수정해야 함 (bnoVal의 value 수정) -->
+
 <h1>Detail Page</h1>
 <br>
 <table class="table">
@@ -43,6 +49,45 @@
 	  <input type="text" name="regAt" class="form-control" id="regAt" placeholder="RegAt..." readonly="readonly" value="${bvo.regAt }">
 	</div>
 	</tr>
+	
+	<!-- 파일 표시 라인 -->
+	<c:set value="${bdto.flist }" var="flist"/>
+	<div class="mb-3">
+		<ul class="list-group list-group-flush">
+	  		<c:forEach items="${flist }" var="fvo">
+	  			<li class="list-group-item">
+	  				<c:choose>
+	  					<c:when test="${fvo.fileType == 1 }">
+	  					<!-- 만약 이미지 파일이라면 (이미지 파일만 fileType 값이 1) -->
+	  						<div>
+	  							<img alt="" src="/upload/${fvo.saveDir }/${fvo.uuid}_th_${fvo.fileName}">
+	  							<!-- ServletConfiguration에서 /upload/ 경로 설정을 미리 해두었음 -->
+	  						</div>
+	  					</c:when>
+	  					<c:otherwise>
+	  					<!-- 만약 이미지 파일이 아니라면 -->
+	  						<div>
+	  							<!-- 일반 파일을 표시할 아이콘 넣어주기 => 부트스트랩 활용 (header.jsp에 아이콘 CDN 링크 추가) -->
+	  							<!-- <a>태그로 파일 다운로드 받기 -->
+	  							<!-- https://mine-it-record.tistory.com/445 참고 -->
+	  							<!-- 일반적으로 일반 파일만 다운로드 할 수 있도록 만듬 -->
+	  							<!-- 왜? 이미지는 보통 마우스 우클릭하여 다른 이름 저장이 가능 -->
+	  							<a href="/upload/${fvo.saveDir }/${fvo.uuid}_${fvo.fileName}" download="${fvo.fileName}">
+	  								<i class="bi bi-download"></i>DOWNLOAD
+	  							</a>
+	  						</div>
+	  					</c:otherwise>
+	  				</c:choose>
+	  				<div class="mb-2 me-auto">
+	  					<div class="fw-bold">${fvo.fileName }</div>
+	  					<span class="badge rounded-pill text-bg-primary">${fvo.fileSize }Byte</span>
+	  				</div>
+	  			</li>
+	  		</c:forEach>
+		</ul>
+	</div>	
+	<!-- 파일 표시 라인 끝 -->
+	
 </table>
 	<a href="/board/list"><button type="button" class="btn btn-primary">List Page</button></a>
 	<a href="/board/modify?bno=${bvo.bno }"><button type="button" class="btn btn-warning">Modify</button></a>
@@ -110,7 +155,7 @@
 	
 	<!-- Comment 비동기 통신 -->
 	<script type="text/javascript">
-		let bnoVal = `<c:out value="${bvo.bno}"/>`;
+		let bnoVal = `<c:out value="${bdto.bvo.bno}"/>`;
 		console.log(bnoVal);
 	</script>
 	<script type="text/javascript" src="/resources/js/boardComment.js"></script>

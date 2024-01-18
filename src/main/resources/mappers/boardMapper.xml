@@ -29,11 +29,6 @@
 		WHERE bno = #{bno}
 	</update>
 	
-	<select id="selectModify" resultType="bvo">
-		SELECT * FROM board
-		WHERE bno = #{bno}
-	</select>
-	
 	<delete id="deleteBvo">
 		DELETE FROM board
 		WHERE bno = #{bno}
@@ -75,5 +70,15 @@
 	<select id="selectOneBno" resultType="long">
 		SELECT MAX(bno) FROM board
 	</select>
+	
+	<update id="updateCommentQty">
+		UPDATE board b SET cmt_qty =
+		(SELECT COUNT(bno) FROM comment WHERE bno = b.bno)
+	</update>
+	
+	<update id="updateFileQty">
+		UPDATE board b SET has_file =
+		(SELECT COUNT(bno) FROM file WHERE bno = b.bno)
+	</update>
 	
 </mapper>

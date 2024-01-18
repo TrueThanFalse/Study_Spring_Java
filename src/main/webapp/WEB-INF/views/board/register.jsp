@@ -24,7 +24,7 @@
 	</div>
 	<div class="mb-3">
 	  <label for="writer" class="form-label">Writer</label>
-	  <input type="text" name="writer" class="form-control" id="writer" placeholder="Writer...">>
+	  <input type="text" name="writer" class="form-control" id="writer" placeholder="Writer...">
 	</div>
 	<div class="mb-3">
 	  <label for="content" class="form-label">Content</label><br>
@@ -34,7 +34,7 @@
 	<!-- file upload 관련 추가 라인 -->
 	<!-- 입력 라인 -->
 	<div class="mb-3">
-	  <label for="files" class="form-label">[files]</label>
+	  <label for="files" class="form-label">files</label>
 	  <input type="file" name="files" class="form-control" id="files" multiple="multiple" style="display: none"><br>
 	  <!-- <input type="file">태그는 모양을 변화시킬 수 없으므로 트리거를 활용하여 다양한 모양으로 버튼을 만들 수 있음 -->
 	  <button type="button" class="btn btn-primary" id="trigger">fileUpload</button>
@@ -47,6 +47,7 @@
 
 	<button type="submit" class="btn btn-primary" id="regBtn" >Register</button>
 	<!-- 파일 upload는 있을수도 있고 없을수도 있으므로 Register 버튼을 disabled 속성으로 비활성화 하지 않음 -->
+	<a><button type="button" class="btn btn-primary">List</button></a>
 	</form>
 </div>
 

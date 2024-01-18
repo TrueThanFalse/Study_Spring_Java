@@ -15,8 +15,6 @@ public interface BoardDAO {
 
 	void updateReadCountUp(int bno);
 
-	BoardVO selectModify(int bno);
-
 	int deleteBvo(int bno);
 
 	int updateEdit(BoardVO bvo);
@@ -24,5 +22,9 @@ public interface BoardDAO {
 	int selectTotalCount(PagingVO pgvo);
 
 	long selectOneBno();
+
+	void updateCommentQty();
+
+	void updateFileQty();
 
 }

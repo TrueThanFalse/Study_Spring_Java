@@ -50,15 +50,17 @@
 </div>
 <!-- 검색 끝 -->
 
-<!-- boardVO list 출력 라인 -->
+<!-- BoardVO list 출력 라인 -->
 <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">title</th>
       <th scope="col">writer</th>
-      <th scope="col">reg_date</th>
       <th scope="col">read_count</th>
+      <th scope="col">comment_qty</th>
+      <th scope="col">file_qty</th>
+      <th scope="col">mod_at</th>
     </tr>  
   <tbody>
   	<c:forEach items="${list }" var="bvo">
@@ -68,8 +70,10 @@
       	<a href="/board/detail?bno=${bvo.bno }">${bvo.title }</a>
       </td>
       <td>${bvo.writer }</td>
-      <td>${bvo.regAt }</td>
       <td>${bvo.readCount }</td>
+      <td>${bvo.cmtQty }</td>
+      <td>${bvo.hasFile }</td>
+      <td>${bvo.modAt }</td>
     </tr>
     </c:forEach>
   </tbody>
@@ -79,14 +83,15 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
   	<!-- prev -->
-  	<%-- <c:if test="${ph.prev }"> --%>
-    <li class="page-item ${(ph.prev eq false) ? 'disabled' : '' }">
+  	<c:if test="${ph.prev }">
+    <%-- <li class="page-item ${(ph.prev eq false) ? 'disabled' : '' }"> --%>
     <!-- c:if를 사용하지 않고 class에 disabled 속성을 활용하여 컨트롤 할 수도 있다. -->
+    <li class="page-item">
       <a class="page-link" href="/board/list?pageNo=${ph.startPage-1 }&qty=${ph.pgvo.qty }&type=${ph.pgvo.type}&keyword=${ph.pgvo.keyword}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <%-- </c:if> --%>
+    </c:if>
     
     <!-- pageNo -->
     <c:forEach begin="${ph.startPage }" end="${ph.endPage }" var="i">
@@ -105,7 +110,6 @@
 </nav>
 <!-- 페이지네이션 끝 -->
 
-<a href="/board/list"><button type="button" class="btn btn-primary position-relative">All list</button></a>
 </div> <!-- class="container-md" 끝 -->
 	
 	<script type="text/javascript">

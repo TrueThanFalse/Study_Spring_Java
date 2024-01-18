@@ -53,7 +53,7 @@ document.addEventListener('change', (e)=>{
             // 개별 검증 통과되면 isOK는 1, 안되면 0
             ul += `<li class="list-group-item">`;
             ul += `<div class="mb-3">`;
-            ul += `${validationResult ? '<div class="text-bg-success">업로드 가능</div>' : '<div class="text-bg-danger">업로드 불가능</div>'}`;
+            ul += `${validationResult ? '<div class="text-success-emphasis">업로드 가능</div>' : '<div class="text-danger-emphasis">업로드 불가능</div>'}`;
             ul += `${file.name}</div>`;
             ul += `<span class="badge rounded-pill text-bg-${validationResult ? 'success' : 'danger'}">${file.size}Byte</span>`;
             ul += `</li>`;

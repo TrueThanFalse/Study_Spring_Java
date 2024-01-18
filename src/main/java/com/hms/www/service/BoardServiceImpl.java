@@ -60,19 +60,41 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	@Transactional
 	public List<BoardVO> getList(PagingVO pgvo) {
+		/*
+		 * list.jsp 진입할 때 마다 모든 BoardVO의
+		 * cmtQty와 hasFile을 update 해주기
+		 */
+		bdao.updateCommentQty();
+		bdao.updateFileQty();
 		return bdao.selectList(pgvo);
 	}
 
 	@Override
-	public BoardVO getDetail(int bno) {
-		return bdao.selectDetail(bno);
+	@Transactional
+	/*
+	 * DB와 연결되는 DAO가 2개 이상 존재하면 @Transactional
+	 * 어노테이션을 활용하여 다른 간섭을 예방해야 한다.
+	 */
+	public BoardDTO getDetail(int bno) {
+		bdao.updateReadCountUp(bno);
+		
+		BoardVO bvo = bdao.selectDetail(bno);
+		List<FileVO> flist = fdao.selectFlist(bno);
+		
+		BoardDTO bdto = new BoardDTO(bvo, flist);
+		return bdto;
 	}
 
 	@Override
-	public BoardVO getModify(int bno) {
-		bdao.updateReadCountUp(bno);
-		return bdao.selectModify(bno);
+	@Transactional
+	public BoardDTO getModify(int bno) {
+		BoardVO bvo = bdao.selectDetail(bno);
+		List<FileVO> flist = fdao.selectFlist(bno);
+		
+		BoardDTO bdto = new BoardDTO(bvo, flist);
+		return bdto;
 	}
 
 	@Override
@@ -81,13 +103,37 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int edit(BoardVO bvo) {
-		return bdao.updateEdit(bvo);
+	@Transactional
+	public int edit(BoardDTO bdto) {
+		// insert Method와 비슷함
+		int isOK = bdao.updateEdit(bdto.getBvo());
+		
+		if(bdto.getFlist() == null) {
+			return isOK;
+		}
+		
+		if(isOK > 0 && bdto.getFlist().size() > 0) {
+			// bno setting : insert 때와는 달리
+			// bno가 이미 생성 되어 있음
+			long bno = bdto.getBvo().getBno();
+			
+			for(FileVO fvo : bdto.getFlist()) {
+				fvo.setBno(bno);
+				isOK *= fdao.insertFile(fvo);
+			}
+		}
+		
+		return isOK;
 	}
 
 	@Override
 	public int getTotalCount(PagingVO pgvo) {
 		return bdao.selectTotalCount(pgvo);
+	}
+
+	@Override
+	public int deleteFile(String uuid) {
+		return fdao.deleteFile(uuid);
 	} 
 	
 }

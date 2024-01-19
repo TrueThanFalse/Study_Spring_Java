@@ -11,7 +11,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 	<!-- Bootstrap 아이콘 CDN 링크 -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-	<title>Ezen</title>
+	<title>EzenAcademy</title>
+	<!-- 모든 JSP의 title은 Header의 title로 통일하여 title 값을 유지 할 수 있다. -->
 </head>
 <body>
 

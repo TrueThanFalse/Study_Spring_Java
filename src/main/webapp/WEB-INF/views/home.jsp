@@ -13,4 +13,11 @@
 	
 </div>
 
+<script type="text/javascript">
+	const signUpMsg = `<c:out value="${signUpMsg}"/>`;
+	if(signUpMsg > 0){
+		alert("회원가입 성공");
+	};
+</script>
+
 <jsp:include page="layout/footer.jsp"/>

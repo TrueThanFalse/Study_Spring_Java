@@ -12,6 +12,7 @@ FLUSH PRIVILEGES;
 ------------------------------------------------------------
 
 <<< 2024-01-07 >>>
+-- board Table 생성
 CREATE TABLE board(
 bno BIGINT NOT NULL AUTO_INCREMENT,
 title VARCHAR(200) NOT NULL,
@@ -22,11 +23,13 @@ mod_at DATETIME DEFAULT NOW(),
 read_count INT DEFAULT 0,
 cmt_qty INT DEFAULT 0,
 has_file INT DEFAULT 0,
-PRIMARY KEY(bno));
+PRIMARY KEY(bno)
+);
 
 ------------------------------------------------------------
 
 <<< 2024-01-09 >>>
+-- comment Table 생성
 CREATE TABLE comment(
 cno BIGINT AUTO_INCREMENT,
 bno BIGINT NOT NULL,
@@ -34,12 +37,13 @@ writer VARCHAR(100) NOT NULL,
 content TEXT NOT NULL,
 reg_at DATETIME DEFAULT NOW(),
 mod_at DATETIME DEFAULT NOW(),
-PRIMARY KEY(cno));
+PRIMARY KEY(cno)
+);
 
 ------------------------------------------------------------
 
 <<< 2024-01-16 >>>
-FILE TABLE 생성
+-- file Table 생성
 CREATE TABLE file(
 uuid VARCHAR(256) NOT NULL,
 save_dir VARCHAR(256) NOT NULL,
@@ -48,6 +52,29 @@ file_type TINYINT(1) DEFAULT 0,
 bno BIGINT,
 file_size BIGINT,
 reg_at DATETIME DEFAULT NOW(),
-PRIMARY KEY(uuid));
+PRIMARY KEY(uuid)
+);
 
 주의사항 : file_size의 return은 long 타입이므로 반드시 BIGINT 타입으로 생성해야 함
+
+------------------------------------------------------------
+
+<<< 2024-01-19 >>>
+-- member 테이블 생성.
+CREATE TABLE member(
+email VARCHAR(100) NOT NULL,
+pwd VARCHAR(1000) NOT NULL,
+nick_name VARCHAR(100) NOT NULL,
+reg_at DATETIME DEFAULT NOW(),
+last_login DATETIME DEFAULT NULL,
+PRIMARY KEY(email)
+);
+
+-- 권한 테이블 생성.
+CREATE TABLE auth_member(
+email VARCHAR(100) NOT NULL,
+auth VARCHAR(50) NOT NULL);
+
+-- 외래키 설정
+ALTER TABLE auth_member ADD CONSTRAINT fk_auth
+FOREIGN KEY(email) REFERENCES member(email);

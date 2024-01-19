@@ -21,5 +21,9 @@
 		DELETE FROM file
 		WHERE uuid = #{uuid}
 	</delete>
+	
+	<select id="selectAllFileList" resultType="com.hms.www.domain.FileVO">
+		SELECT * FROM file
+	</select>
 
 </mapper>

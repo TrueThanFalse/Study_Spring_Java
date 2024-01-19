@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -22,6 +23,8 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 // WebConfig, ServletConfiguration처럼 상속 받지 않으므로 RootConfig가
 // 설정파일 인것을 @Configuration 어노테이션으로 인식 시켜줘야 함
+@EnableScheduling
+// Scheduler 기능 활성화
 public class RootConfig {
 	
 	// RootConfig는 상속받거나 인터페이스 없이 처음부터 생으로 작성해야 함

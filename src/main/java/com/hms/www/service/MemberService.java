@@ -6,4 +6,6 @@ public interface MemberService {
 
 	int signUP(MemberVO mvo);
 
+	int selectEmail(String email);
+
 }

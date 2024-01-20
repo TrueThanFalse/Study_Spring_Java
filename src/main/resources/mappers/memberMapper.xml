@@ -5,9 +5,22 @@
   
 <mapper namespace="com.hms.www.repository.MemberDAO">
 
-	<select id="insert">
+	<insert id="insertUser">
 		INSERT INTO member(email, pwd, nick_name)
 		VALUES(#{email}, #{pwd}, #{nickName})
+	</insert>
+	
+	<insert id="insertAuth">
+		INSERT INTO auth_member
+		VALUES(#{email}, 'ROLE_USER')
+		<!-- 가입을 하면 기본적으로 ROLE_USER 권한을 부여하도록 설정 완료 -->
+		<!-- DB Table 생성시 auth의 default 값을 ROLE_USER로 Setting 해도 됨 -->
+		<!-- ADMIN 계정의 권한 부여는 DB SQL 쿼리문을 직접 입력하여 부여하는 것이 효율적임 -->
+	</insert>
+	
+	<select id="selectEmail" resultType="int">
+		SELECT COUNT(email) FROM member
+		WHERE email = #{email}
 	</select>
 
 </mapper>

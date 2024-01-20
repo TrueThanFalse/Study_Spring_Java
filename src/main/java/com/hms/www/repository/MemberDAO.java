@@ -4,6 +4,10 @@ import com.hms.www.security.MemberVO;
 
 public interface MemberDAO {
 
-	int insert(MemberVO mvo);
+	int insertUser(MemberVO mvo);
+
+	int insertAuth(String email);
+
+	int selectEmail(String email);
 
 }

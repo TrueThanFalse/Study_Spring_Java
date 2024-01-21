@@ -8,4 +8,6 @@ public interface MemberService {
 
 	int selectEmail(String email);
 
+	boolean updateLastLogin(String authEmail);
+
 }

@@ -1,5 +1,7 @@
 package com.hms.www.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,4 +54,18 @@ public class MemberController {
 		int isOK = msv.selectEmail(email);
 		return String.valueOf(isOK);
 	}
+	
+	@GetMapping("/login")
+	public void login() {}
+	
+	@PostMapping("/loginError")
+	public String loginFail(HttpServletRequest request, RedirectAttributes re) {
+		// 로그인 실패하면 다시 로그인 페이지로 이동하여 오류 메세지를 전송하고 다시 로그인을 유도
+		
+		re.addFlashAttribute("email", request.getAttribute("email"));
+		re.addFlashAttribute("errMsg", request.getAttribute("errMsg"));
+		
+		return "redirect:/member/login";
+	}
+	
 }

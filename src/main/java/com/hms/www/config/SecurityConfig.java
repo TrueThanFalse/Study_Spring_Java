@@ -99,7 +99,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		 * hasRole() : 해당 권한을 가지고 있어야만 접근 가능
 		 * permitAll() : 누구나 접근 가능(비로그인 사용자 접근 가능)
 		 * authenticated : 인증된 사용자만 접근 가능(로그인 된 상태로만 접근 가능)
-		 * authenticated는 로그인 없이 접근하면 로그인 하라고 Error가 발생할 것임
+		 * authenticated는 로그인 없이 접근하면 formLogin Method의 loginPage 경로로
+		 * 자동 전송되어 로그인 하라고 클라이언트에게 권유하게 됨
+		 * => loginPage 경로가 존재하지 않으면 404 Exception이 발생할 것임
+		 * 
+		 * 주의 사항 : 승인 요청을 설정하면 개발자가 어떠한 Logic을 구현 후 Test할 때마다 권한을
+		 * 명확히 설정해주지 않으면 Exception이 발생할 수 있으므로 처음부터 Security를 설정하면
+		 * 개발하는데 효율적이지 않으므로 Security 작업은 개발의 후반에 하는 것이 효율적일 수도 있다.
 		 */
 		http.authorizeRequests()
 		.antMatchers("/member/list").hasRole("ADMIN")

@@ -22,5 +22,20 @@
 		SELECT COUNT(email) FROM member
 		WHERE email = #{email}
 	</select>
+	
+	<select id="selectUserName" resultType="com.hms.www.security.MemberVO">
+		SELECT * FROM member
+		WHERE email = #{username}
+	</select>
+	
+	<select id="selectAuths" resultType="com.hms.www.security.AuthVO">
+		SELECT * FROM auth_member
+		WHERE email = #{username}
+	</select>
+	
+	<update id="updateLastLogin">
+		UPDATE member SET last_login = NOW()
+		WHERE email = #{authEmail}
+	</update>
 
 </mapper>

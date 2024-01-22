@@ -43,7 +43,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 			request.setAttribute("email", getAuthEmail());
 			request.setAttribute("errMsg", getErrorMessage());
 			
-			// MemberController로 request와 response의 데이터를 가지고 전송 (post 방식)
+			// MemberController로 request와 response의 데이터를 가지고 지정한 경로로 전송
 			request.getRequestDispatcher("/member/loginError").forward(request, response);			
 		}
 	}

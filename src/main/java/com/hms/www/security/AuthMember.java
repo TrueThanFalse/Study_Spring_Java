@@ -24,6 +24,7 @@ public class AuthMember extends User{
 	
 	// MemberVO 객체 선언
 	private MemberVO mvo;
+	// => 이 MemberVO 객체가 principal에 들어감
 	
 	// 실제로 사용할 생성자 작성
 	public AuthMember(MemberVO mvo) {
@@ -33,6 +34,8 @@ public class AuthMember extends User{
 				.map(authVO -> new SimpleGrantedAuthority(authVO.getAuth()))
 				.collect(Collectors.toList())
 				);
+		// 위 super는 User를 세팅하는 Logic이고 오직 Authentication객체에 인증만을 위한 User 객체를 만든다.
+		
 		this.mvo = mvo;
 	}
 }

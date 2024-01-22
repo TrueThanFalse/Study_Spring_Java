@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public PasswordEncoder bcPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 		// 비밀번호 암호화 객체(PasswordEncoder) 빈 등록
+		// => 개발자 커스텀 Method임
 	}
 	
 	// SuccessHandler
@@ -45,9 +46,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public AuthenticationSuccessHandler authSuccessHandler() {
 		return new LoginSuccessHandler();
 		// SuccessHandler 빈 등록
-		// 클래스 LoginSuccessHandler 생성 필요 (security 패키지에 생성)
-		// => 사용자 커스텀 설정
-		// 빨간밑줄에 Create하면 자동으로 AuthenticationSuccessHandler 인터페이스를 잡아줌
+		// return되는 클래스 LoginSuccessHandler 생성 필요 (security 패키지에 생성)
+		// => 개발자 커스텀 Method임
+		// return의 빨간밑줄에 Create하면 자동으로 AuthenticationSuccessHandler 인터페이스를 잡아줌
 	}
 	
 	// FailureHandler
@@ -55,27 +56,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	public AuthenticationFailureHandler authFailureHandler() {
 		return new LoginFailureHandler();
 		// FailureHandler 빈 등록
-		// 클래스 LoginFailureHandler 생성 필요 (security 패키지에 생성)
-		// => 사용자 커스텀 설정
-		// 빨간밑줄에 Create하면 자동으로 AuthenticationFailureHandler 인터페이스를 잡아줌
+		// return되는 클래스 LoginFailureHandler 생성 필요 (security 패키지에 생성)
+		// => 개발자 커스텀 Method임
+		// return의 빨간밑줄에 Create하면 자동으로 AuthenticationFailureHandler 인터페이스를 잡아줌
 	}
 	
 	// UserDetails
 	@Bean
 	public UserDetailsService customUserService() {
 		return new CustomAuthMemberService();
-		// UserDetails 빈 등록 (사용자 커스텀 설정)
-		// 클래스 CustomAuthMemberService 생성 필요 (security 패키지에 생성)
-		// => 사용자 커스텀 설정
-		// 빨간밑줄에 Create하면 자동으로 UserDetailsService 인터페이스를 잡아줌
+		// UserDetails 빈 등록
+		// return되는 클래스 CustomAuthMemberService 생성 필요 (security 패키지에 생성)
+		// => 개발자 커스텀 Method임
+		// return의 빨간밑줄에 Create하면 자동으로 UserDetailsService 인터페이스를 잡아줌
 	}
 	
-	///// 위 4개의 Method는 하단 오버라이드 Method를 완성하기 위해 만든 custom Method /////
+	///// 위 4개의 Method는 하단 오버라이드 Method를 완성하기 위해 만든 개발자의 custom Method /////
 	
 	@Override // WebSecurityConfigurerAdapter 오버라이드
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// 인증되는 객체 설정하기
+		/*
+		 * 인증되는 객체를 세팅하는 Method
+		 * 즉, Authentication 객체가 생성되고 세팅되어야 함 
+		 * 이 Method는 http.formLogin()가 트리거 발동으로 실행되면
+		 * 이 Method도 실행 된다.
+		 */
+		
 		auth.userDetailsService(customUserService()).passwordEncoder(bcPasswordEncoder());
+		// auth에 저장되는 실질적은 것은 AuthMember 클래스 내부의 MemberVO 멤버변수임
 	}
 
 	@Override // WebSecurityConfigurerAdapter 오버라이드

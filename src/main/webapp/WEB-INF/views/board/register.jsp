@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,8 +24,10 @@
 	  <input type="text" name="title" class="form-control" id="title" placeholder="Title...">
 	</div>
 	<div class="mb-3">
+	<sec:authentication property="principal.mvo.email" var="authEmail"/>
 	  <label for="writer" class="form-label">Writer</label>
-	  <input type="text" name="writer" class="form-control" id="writer" placeholder="Writer...">
+	  <input type="text" name="writer" class="form-control" id="writer" value="${authEmail }" readonly>
+	  <!-- 로그인 해야지만 게시글 쓰기가 가능 하도록 변경하였으므로 Writer의 값을 로그인된 사용자의 이메일로 고정해도 된다. -->
 	</div>
 	<div class="mb-3">
 	  <label for="content" class="form-label">Content</label><br>

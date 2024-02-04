@@ -18,7 +18,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @MapperScan(basePackages = {"com.hms.www.repository"})
-@ComponentScan(basePackages = {"com.hms.www.service"})
+@ComponentScan(basePackages = {"com.hms.www.service", "com.hms.www.exception"})
 @EnableTransactionManagement // 트랜잭션 설정
 @Configuration
 // WebConfig, ServletConfiguration처럼 상속 받지 않으므로 RootConfig가

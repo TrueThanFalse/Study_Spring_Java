@@ -82,5 +82,8 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 				new MultipartConfigElement(uploadLocation, maxFileSize, maxRequestSize, fileSizeThreshold);
 		
 		registration.setMultipartConfig(multipartConfig);
+		
+		// 사용자 지정 Exception 처리
+		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
 	}
 }

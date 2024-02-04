@@ -1,8 +1,12 @@
 package com.hms.www.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.hms.www.repository.MemberDAO;
+import com.hms.www.security.AuthVO;
 import com.hms.www.security.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -29,12 +33,50 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int selectEmail(String email) {
-		return mdao.selectEmail(email);
+	public boolean updateLastLogin(String authEmail) {
+		return mdao.updateLastLogin(authEmail);
 	}
 
 	@Override
-	public boolean updateLastLogin(String authEmail) {
-		return mdao.updateLastLogin(authEmail);
+	@Transactional
+	public List<MemberVO> selectMemberList() {
+		List<MemberVO> memberList = mdao.selectMemberList();
+		for(int i=0; i<memberList.size(); i++) {
+			String email = memberList.get(i).getEmail();
+			List<AuthVO> authList = mdao.selectAuths(email);
+			memberList.get(i).setAuthList(authList);
+		};
+		return memberList;
+	}
+	
+	@Override
+	public void noPwdUpdate(MemberVO mvo) {
+		mdao.updateNopwd(mvo);
+	}
+
+	@Override
+	public void pwdUpdate(MemberVO mvo) {
+		mdao.updatePwd(mvo);
+	}
+
+	@Override
+	public int Withdrawal(String email) {
+		mdao.deleteAuthMember(email);
+		return mdao.deleteMember(email);
+	}
+	
+	@Override
+	@Transactional
+	public MemberVO detail(String email) {
+		// MemberVO는 항상 authList와 한 세트라는 것을 잊지 말아야 함
+		MemberVO mvo = mdao.selectEmail(email);
+		List<AuthVO> authList = mdao.selectAuths(email);
+		mvo.setAuthList(authList);
+		return mvo;
+	}
+
+	@Override
+	public int selectEmail(String email) {
+		return mdao.selectEmailInt(email);
 	}
 }

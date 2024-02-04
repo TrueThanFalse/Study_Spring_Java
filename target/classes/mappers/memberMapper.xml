@@ -18,7 +18,7 @@
 		<!-- ADMIN 계정의 권한 부여는 DB SQL 쿼리문을 직접 입력하여 부여하는 것이 효율적임 -->
 	</insert>
 	
-	<select id="selectEmail" resultType="int">
+	<select id="selectEmailInt" resultType="int">
 		SELECT COUNT(email) FROM member
 		WHERE email = #{email}
 	</select>
@@ -37,5 +37,29 @@
 		UPDATE member SET last_login = NOW()
 		WHERE email = #{authEmail}
 	</update>
+	
+	<select id="selectMemberList" resultType="com.hms.www.security.MemberVO">
+		SELECT * FROM member
+	</select>
+	
+	<update id="updateNopwd">
+		UPDATE member SET nick_name = #{nickName}
+		WHERE email = #{email}
+	</update>
+	
+	<update id="updatePwd">
+		UPDATE member SET nick_name = #{nickName}, pwd = #{pwd}
+		WHERE email = #{email}
+	</update>
+	
+	<delete id="deleteAuthMember">
+		DELETE FROM auth_member
+		WHERE email = #{email}
+	</delete>
+	
+	<delete id="deleteMember">
+		DELETE FROM member
+		WHERE email = #{email}
+	</delete>
 
 </mapper>

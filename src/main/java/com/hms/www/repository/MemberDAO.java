@@ -11,12 +11,24 @@ public interface MemberDAO {
 
 	int insertAuth(String email);
 
-	int selectEmail(String email);
+	MemberVO selectEmail(String username);
 
 	MemberVO selectUserName(String username);
 
 	List<AuthVO> selectAuths(String username);
 
 	boolean updateLastLogin(String authEmail);
+
+	List<MemberVO> selectMemberList();
+	
+	void updateNopwd(MemberVO mvo);
+
+	void updatePwd(MemberVO mvo);
+
+	void deleteAuthMember(String email);
+
+	int deleteMember(String email);
+
+	int selectEmailInt(String email);
 
 }
